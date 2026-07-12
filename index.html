@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shoes Hub | Bardoli Footwear Store</title>
+  <meta name="description" content="My Shoes Hub is a Bardoli, Gujarat footwear storefront offering Chelsea boots, sneakers, riding shoes, sport runners, formal wear, and refurbished shoe options.">
+  <meta name="keywords" content="My Shoes Hub, Bardoli shoe store, Chelsea boots Bardoli, refurbished shoes Gujarat, formal shoe rental Bardoli, riding shoes">
+  <meta name="author" content="Kritesh Yadav">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:title" content="My Shoes Hub | Bardoli's Premium Footwear Destination">
+  <meta property="og:description" content="Explore premium Chelsea boots, sneakers, riding shoes, sport runners, and formal wear at Bardoli's trusted footwear hub.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&q=80&w=1200">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="My Shoes Hub | Bardoli shoe store">
+  <meta property="twitter:description" content="From new and refurbished footwear to daily formal rentals, My Shoes Hub helps every local customer find the right pair.">
+  <link rel="icon" type="image/png" href="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=32">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#6B1D2A', light: '#7E2A3A', dark: '#431018' },
+            accent: { DEFAULT: '#C98A2B', light: '#D7A343', dark: '#9A6A16' },
+            cream: { DEFAULT: '#F7F0E3', dark: '#EFE6D4' },
+            ink: { DEFAULT: '#241F1D', light: '#433B37' }
+          },
+          fontFamily: {
+            heading: ['Cormorant Garamond', 'serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace']
+          },
+          borderRadius: { premium: '16px', button: '8px' },
+          boxShadow: { premium: '0 10px 30px -10px rgba(67, 20, 7, 0.08)', 'premium-hover': '0 20px 40px -15px rgba(67, 20, 7, 0.15)' }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ShoeStore",
+      "name": "My Shoes Hub",
+      "image": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&q=80&w=800",
+      "url": "https://example.com/",
+      "telephone": "+911234567892",
+      "priceRange": "₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Bardoli, Gujarat",
+        "addressLocality": "Bardoli",
+        "addressRegion": "Gujarat",
+        "postalCode": "394601",
+        "addressCountry": "IN"
+      },
+      "founder": { "@type": "Person", "name": "Kritesh Yadav" },
+      "foundingDate": "2005"
+    }
+  </script>
+</head>
+<body class="leather-grain min-h-screen">
+  <header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 glass-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="#home" class="flex items-center space-x-2 group">
+          <span class="text-2xl font-extrabold tracking-tight text-primary transition-colors group-hover:text-primary-light">My Shoes <span class="text-accent font-semibold">Hub</span></span>
+        </a>
+        <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
+          <a href="#home" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Home</a>
+          <a href="#shop" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Shop</a>
+          <a href="#rental" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Rental</a>
+          <a href="#sell" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Refurbish</a>
+          <a href="#wiki" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Fit Guide</a>
+          <a href="#contact" class="nav-link hover:text-primary transition-colors py-2 border-b-2 border-transparent">Contact</a>
+        </nav>
+        <div class="hidden sm:flex items-center space-x-4">
+          <a id="nav-whatsapp-btn" href="#" target="_blank" class="p-2.5 bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition-colors" aria-label="Chat on WhatsApp"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+          <a id="nav-call-btn" href="tel:+919328291234" class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-semibold rounded-button text-white bg-primary hover:bg-primary-light transition-all shadow-sm hover:shadow"><i data-lucide="phone" class="w-4 h-4 mr-2"></i>Call: +91 93282 91234</a>
+        </div>
+        <div class="md:hidden flex items-center space-x-3">
+          <a id="mobile-quick-call" href="tel:+919328291234" class="p-2 bg-primary text-white rounded-button sm:hidden" aria-label="Call Now"><i data-lucide="phone" class="w-5 h-5"></i></a>
+          <button id="mobile-menu-btn" class="p-2 text-gray-700 hover:text-primary focus:outline-none" aria-label="Toggle Menu"><i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i><i data-lucide="x" id="close-icon" class="w-6 h-6 hidden"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-drawer" class="hidden md:hidden absolute top-20 left-0 w-full bg-cream border-b border-warm transition-all duration-300">
+      <div class="px-4 pt-2 pb-6 space-y-3">
+        <a href="#home" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Home</a>
+        <a href="#shop" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Shop</a>
+        <a href="#rental" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Rent</a>
+        <a href="#sell" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Sell</a>
+        <a href="#wiki" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Wiki</a>
+        <a href="#contact" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Contact</a>
+        <div class="pt-4 flex flex-col space-y-3 border-t border-warm-dark/10">
+          <a id="mobile-whatsapp-btn" href="#" target="_blank" class="flex items-center justify-center w-full px-4 py-3 bg-green-600 text-white rounded-button font-bold text-sm hover:bg-green-700 transition-colors"><i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>WhatsApp Us</a>
+          <a href="tel:+919328291234" class="flex items-center justify-center w-full px-4 py-3 bg-primary text-white rounded-button font-bold text-sm hover:bg-primary-light transition-colors"><i data-lucide="phone" class="w-4 h-4 mr-2"></i>Call: +91 93282 91234</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-br from-cream to-cream-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left reveal">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20"><i data-lucide="award" class="w-3.5 h-3.5 mr-1.5"></i>Serving Bardoli since 2005</div>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 leading-tight">My Shoes <span class="text-gradient block mt-1">Hub</span></h1>
+          <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0">A trusted neighborhood footwear destination where customers browse premium Chelsea boots, sneakers, riding shoes, sport runners, and formal pairs with practical fit guidance from owner Kritesh Yadav.</p>
+          <div class="flex flex-col sm:flex-row justify-center lg:justify-start items-center space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+            <a href="#shop" class="btn-pulse flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-button hover:bg-primary-light transition-all shadow-lg hover:shadow-xl"><i data-lucide="shoe" class="w-5 h-5 mr-2"></i>Explore the collection</a>
+            <a id="hero-whatsapp-btn" href="#" target="_blank" class="flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-white border border-gray-200 text-green-700 font-bold rounded-button hover:bg-green-50 transition-all shadow-sm"><i data-lucide="message-square-more" class="w-5 h-5 mr-2 text-green-600"></i>Chat on WhatsApp</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5 relative flex justify-center reveal-right">
+          <div class="relative w-full max-w-md sm:max-w-lg aspect-[4/5]">
+            <div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-accent/10 rounded-full blur-2xl -z-10 scale-95"></div>
+            <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&q=80&w=800" alt="Premium footwear collection in a neighborhood shoe store" class="w-full h-full object-cover rounded-2xl shadow-premium">
+            <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm p-4 rounded-premium border border-warm shadow-lg flex items-center space-x-3">
+              <div class="p-2 bg-accent/20 text-accent rounded-full"><i data-lucide="users" class="w-6 h-6"></i></div>
+              <div>
+                <p class="text-xs text-gray-500 font-medium">Daily customers</p>
+                <p class="text-lg font-bold text-gray-900">45+ happy visitors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-primary text-white border-y border-primary-dark overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="space-y-1"><div class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight flex justify-center items-center"><span class="counter" data-target="30">0</span>+</div><p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-accent-light">Years in business</p><p class="text-[10px] sm:text-xs text-white/70">Since 1996</p></div>
+        <div class="space-y-1"><div class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight flex justify-center items-center"><span class="counter" data-target="45">0</span>+</div><p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-accent-light">Daily customers</p><p class="text-[10px] sm:text-xs text-white/70">Bardoli regulars</p></div>
+        <div class="space-y-1"><div class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight flex justify-center items-center"><span class="counter" data-target="5">0</span></div><p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-accent-light">Core categories</p><p class="text-[10px] sm:text-xs text-white/70">Boots, sneakers, riders</p></div>
+        <div class="space-y-1"><div class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight flex justify-center items-center"><span class="text-accent-light mr-1">✦</span>100%</div><p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-accent-light">Fit-first</p><p class="text-[10px] sm:text-xs text-white/70">Refurbish, rent, and customise</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop" class="py-20 md:py-28 bg-cream-dark/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16 reveal">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-primary">Browse the catalogue</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900">Find your next pair</p>
+        <div class="w-16 h-1 bg-accent mx-auto rounded-full"></div>
+        <p class="text-gray-600">Search by style, fit focus, or condition. Each pair is listed for the local store experience.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-10 reveal">
+        <div class="bg-white border border-warm rounded-premium p-4 shadow-sm">
+          <label for="catalog-search" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Search footwear</label>
+          <input id="catalog-search" type="search" placeholder="Search by shoe name, style, or fit" class="w-full p-3 border border-warm rounded-button bg-cream text-sm focus:outline-none focus:border-primary">
+        </div>
+        <div class="bg-white border border-warm rounded-premium p-4 shadow-sm">
+          <label for="catalog-condition" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Condition</label>
+          <select id="catalog-condition" class="w-full p-3 border border-warm rounded-button bg-cream text-sm focus:outline-none focus:border-primary">
+            <option value="all">All conditions</option>
+            <option value="NEW">New</option>
+            <option value="REFURBISHED">Refurbished</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2 mb-12 reveal">
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all active" data-category="all">All</button>
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-category="CHELSEA_BOOTS">Chelsea Boots</button>
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-category="SNEAKERS">Sneakers</button>
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-category="SPORT_SHOES">Sport Shoes</button>
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-category="RIDING_SHOES">Riding Shoes</button>
+        <button class="filter-tab px-5 py-2.5 rounded-full text-sm font-semibold border border-warm bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-category="FORMAL_SHOES">Formal Shoes</button>
+      </div>
+      <div class="grid grid-cols-1 xl:grid-cols-[1.8fr_0.9fr] gap-8">
+        <div id="products-grid-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+        <aside class="bg-white border border-warm rounded-premium shadow-premium p-5 h-fit sticky top-24">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-gray-900">Footwear cart</h3>
+            <span id="cart-count-badge" class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">0 items</span>
+          </div>
+          <div id="cart-list" class="space-y-3"></div>
+          <div class="border-t border-warm pt-4 mt-4">
+            <div class="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+            <button class="mt-4 w-full py-3 bg-primary text-white font-bold rounded-button">Reserve pair</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="rental" class="py-20 md:py-28 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 space-y-6 reveal">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">Formal shoe rental</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">Rent a pair for the event</h2>
+          <p class="text-gray-600">Customers can borrow a premium pair for a few days with a refundable deposit. The calculator below shows the daily rate, any discount for longer stays, and the final payable amount.</p>
+          <div class="space-y-4 pt-4">
+            <div class="flex items-start space-x-3.5"><div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0">1</div><div><h4 class="font-bold text-gray-900">Pick a pair</h4><p class="text-sm text-gray-500">Choose a formal style from the rental-friendly shelf.</p></div></div>
+            <div class="flex items-start space-x-3.5"><div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0">2</div><div><h4 class="font-bold text-gray-900">Set the days</h4><p class="text-sm text-gray-500">Longer rentals unlock small multi-day savings.</p></div></div>
+            <div class="flex items-start space-x-3.5"><div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0">3</div><div><h4 class="font-bold text-gray-900">Return and collect deposit</h4><p class="text-sm text-gray-500">The deposit is returned once the pair is handed back in good condition.</p></div></div>
+          </div>
+        </div>
+        <div class="lg:col-span-6 reveal-right">
+          <div class="bg-white p-8 rounded-premium border border-warm shadow-premium max-w-md mx-auto relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-accent"></div>
+            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center"><i data-lucide="calculator" class="w-5 h-5 mr-2 text-primary"></i>Rental calculator</h3>
+            <div class="space-y-6">
+              <div><label for="rental-book-select" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Select shoe style</label><select id="rental-book-select" class="w-full p-3 border border-gray-200 rounded-button bg-gray-50 text-sm focus:outline-none focus:border-primary font-medium"></select></div>
+              <div>
+                <div class="flex justify-between items-center mb-2"><label for="rental-days-slider" class="block text-xs font-bold text-gray-600 uppercase tracking-wider">Number of days</label><span id="rental-days-display" class="text-sm font-bold text-primary">3 days</span></div>
+                <input type="range" id="rental-days-slider" min="1" max="14" value="3" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                <div class="flex justify-between text-[10px] text-gray-400 font-semibold px-1 pt-1.5"><span>1 day</span><span>7 days</span><span>14 days</span></div>
+              </div>
+              <div class="p-4 bg-cream rounded-button border border-warm/80 space-y-2.5 text-sm">
+                <div class="flex justify-between text-gray-600"><span>Rental charge (<span id="calc-rate">₹199</span> x <span id="calc-days">3</span> days)</span><span id="calc-raw-total" class="font-semibold text-gray-800">₹597</span></div>
+                <div id="calc-discount-row" class="flex justify-between text-green-700 font-medium"><span>Multi-day discount</span><span id="calc-discount-val">-₹60</span></div>
+                <div class="flex justify-between text-gray-600"><span>Refundable deposit</span><span>₹500</span></div>
+                <div class="border-t border-warm pt-3 mt-1 flex justify-between text-gray-900 font-bold text-base"><span>Total payable today</span><span id="calc-final-total" class="text-primary">₹1,037</span></div>
+              </div>
+              <button id="calc-rent-btn" class="w-full py-4 bg-primary text-white font-bold rounded-button hover:bg-primary-light transition-all flex items-center justify-center shadow-md"><i data-lucide="message-square" class="w-5 h-5 mr-2"></i>Enquire rental on WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sell" class="py-20 md:py-28 bg-cream-dark/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div class="lg:col-span-5 reveal-left">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">Sell your shoes</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-4">Trade in pairs you no longer need</h2>
+          <p class="text-gray-600 mt-4">Tell us the shoe type, style, condition, and expected price. The owner reviews the request and moves it through the refurbish flow from Pending to Reviewed to Offer Made.</p>
+          <div class="mt-8 space-y-3">
+            <div class="flex items-center justify-between bg-white rounded-premium border border-warm p-4"><span class="text-sm font-semibold text-gray-700">Pending</span><span class="text-xs text-gray-500">New request</span></div>
+            <div class="flex items-center justify-between bg-white rounded-premium border border-warm p-4"><span class="text-sm font-semibold text-gray-700">Reviewed</span><span class="text-xs text-gray-500">Condition confirmed</span></div>
+            <div class="flex items-center justify-between bg-white rounded-premium border border-warm p-4"><span class="text-sm font-semibold text-gray-700">Offer Made</span><span class="text-xs text-gray-500">Customer sees the quote</span></div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 reveal-right">
+          <div class="bg-white border border-warm rounded-premium p-8 shadow-premium">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">Footwear buy-back form</h3>
+            <form id="sell-form" novalidate class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"><div><label for="sell-title" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Shoe model *</label><input id="sell-title" type="text" class="w-full p-3.5 bg-cream border border-warm rounded-button text-sm focus:outline-none focus:border-primary"><p id="sell-error-title" class="hidden text-red-500 text-xs mt-1.5"></p></div><div><label for="sell-author" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Brand / style *</label><input id="sell-author" type="text" class="w-full p-3.5 bg-cream border border-warm rounded-button text-sm focus:outline-none focus:border-primary"><p id="sell-error-author" class="hidden text-red-500 text-xs mt-1.5"></p></div></div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"><div><label for="sell-condition" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Condition *</label><select id="sell-condition" class="w-full p-3.5 bg-cream border border-warm rounded-button text-sm focus:outline-none focus:border-primary"><option value="">Choose a condition</option><option value="Like New">Like New</option><option value="Good">Good</option><option value="Needs Repair">Needs Repair</option></select><p id="sell-error-condition" class="hidden text-red-500 text-xs mt-1.5"></p></div><div><label for="sell-price" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Expected price *</label><input id="sell-price" type="number" min="0" placeholder="₹" class="w-full p-3.5 bg-cream border border-warm rounded-button text-sm focus:outline-none focus:border-primary"><p id="sell-error-price" class="hidden text-red-500 text-xs mt-1.5"></p></div></div>
+              <div><label for="sell-notes" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Add details *</label><textarea id="sell-notes" rows="4" class="w-full p-3.5 bg-cream border border-warm rounded-button text-sm focus:outline-none focus:border-primary"></textarea><p id="sell-error-notes" class="hidden text-red-500 text-xs mt-1.5"></p></div>
+              <button type="submit" class="w-full py-4 bg-primary text-white font-bold rounded-button hover:bg-primary-light transition-all flex items-center justify-center shadow-lg">Submit buy-back request</button>
+            </form>
+            <div id="sell-status-card" class="mt-6 hidden rounded-premium border border-warm bg-cream p-4"><div class="flex items-center justify-between mb-4"><h4 class="font-bold text-gray-900">Latest request status</h4><span id="sell-status-badge" class="rounded-full bg-amber-100 text-amber-700 px-3 py-1 text-xs font-bold">Pending</span></div><div id="sell-status-steps" class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-xs"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wiki" class="py-20 md:py-28 bg-cream relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16 reveal">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-primary">Fit Guide</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-gray-900">A quick, searchable style reference</p>
+        <div class="w-16 h-1 bg-accent mx-auto rounded-full"></div>
+        <p class="text-gray-600">Scan fit tips, upkeep guidance, and style notes. This helps customers choose a pair that suits their day and routine.</p>
+      </div>
+      <div class="mb-8 reveal">
+        <label for="wiki-search" class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">Search fit guide entries</label>
+        <input id="wiki-search" type="search" placeholder="Search by title, style, or fit term" class="w-full p-3 border border-warm rounded-button bg-white text-sm focus:outline-none focus:border-primary">
+      </div>
+      <div id="wiki-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </div>
+  </section>
+
+  <section id="about" class="py-20 md:py-28 bg-cream-dark/20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal-left"><div class="relative max-w-sm sm:max-w-md mx-auto"><div class="absolute -inset-4 border-2 border-dashed border-accent/20 rounded-premium -z-10"></div><img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=600" alt="A neighborhood footwear shop with trusted local service" class="rounded-premium shadow-premium aspect-[4/5] object-cover w-full"></div></div>
+        <div class="lg:col-span-7 space-y-6 reveal">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">Founder story</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">A family-run footwear shop built on trust</h2>
+          <div class="w-16 h-1 bg-accent rounded-full"></div>
+          <div class="space-y-4 text-gray-600 leading-relaxed text-sm sm:text-base">
+            <p>My Shoes Hub has been serving Bardoli since 2005. Owner Kritesh Yadav personally oversees the shop and keeps the promise that each recommendation is rooted in real fit needs and daily wear.</p>
+            <p>From Chelsea boots to sport runners and formal rentals, the store is tuned to daily requests for a pair that looks right and feels comfortable all day.</p>
+            <p>That local warmth is precisely why customers keep coming back.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-20 md:py-28 bg-ebony text-white leather-grain relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5 space-y-6 reveal-left">
+          <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-accent/20 text-accent border border-accent/30">Need help choosing?</div>
+          <h2 class="text-3xl font-extrabold text-white">Send an enquiry</h2>
+          <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Tell us what style you are looking for or if you want help with a rental, buy-back, or pair recommendation.</p>
+          <div class="pt-6 space-y-4">
+            <a href="tel:+911234567892" class="flex items-center p-4 bg-ebony-light border border-white/10 rounded-premium hover:border-accent/40 transition-colors group">
+              <div class="p-3 bg-primary/20 text-accent rounded-button group-hover:scale-110 transition-transform"><i data-lucide="phone-call" class="w-5 h-5"></i></div>
+              <div class="ml-4"><p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Call directly</p><p class="text-base font-bold text-white mt-0.5">+91 12345 67892</p></div>
+            </a>
+            <a id="contact-whatsapp-btn" href="#" target="_blank" class="flex items-center p-4 bg-ebony-light border border-white/10 rounded-premium hover:border-accent/40 transition-colors group">
+              <div class="p-3 bg-green-950/40 text-green-500 rounded-button group-hover:scale-110 transition-transform"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+              <div class="ml-4"><p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">WhatsApp chat</p><p class="text-base font-bold text-white mt-0.5">Start instant chat</p></div>
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-7 reveal-right">
+          <div class="bg-ebony-light border border-white/10 p-8 rounded-premium shadow-xl relative">
+            <h3 class="text-xl font-bold text-white mb-6">Enquiry form</h3>
+            <form id="enquiry-form" class="space-y-5" novalidate>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"><div><label for="form-name" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Your name *</label><input id="form-name" type="text" placeholder="Enter your name" class="w-full p-3.5 bg-ebony/60 border border-white/15 rounded-button text-sm focus:outline-none focus:border-accent text-white placeholder-gray-500"><p id="error-name" class="hidden text-red-500 text-xs mt-1.5"></p></div><div><label for="form-phone" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Phone number *</label><input id="form-phone" type="tel" placeholder="10-digit mobile number" class="w-full p-3.5 bg-ebony/60 border border-white/15 rounded-button text-sm focus:outline-none focus:border-accent text-white placeholder-gray-500"><p id="error-phone" class="hidden text-red-500 text-xs mt-1.5"></p></div></div>
+              <div><label for="form-interest" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">What are you interested in?</label><select id="form-interest" class="w-full p-3.5 bg-ebony/60 border border-white/15 rounded-button text-sm focus:outline-none focus:border-accent text-white font-medium"><option value="" disabled selected>Select an option...</option><option value="Chelsea Boots">Chelsea Boots</option><option value="Sneakers">Sneakers</option><option value="Sport Shoes">Sport Shoes</option><option value="Riding Shoes">Riding Shoes</option><option value="Formal Shoes - Buy">Formal Shoes (Buy New)</option><option value="Formal Shoes - Rental">Formal Shoes (Rental)</option><option value="Refurbishment service">Refurbish my own shoes</option><option value="Other enquiry">General enquiry</option></select><p id="error-interest" class="hidden text-red-500 text-xs mt-1.5"></p></div>
+              <div><label for="form-message" class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Your message *</label><textarea id="form-message" rows="4" placeholder="Tell us the style, size, or rental dates..." class="w-full p-3.5 bg-ebony/60 border border-white/15 rounded-button text-sm focus:outline-none focus:border-accent text-white placeholder-gray-500"></textarea><p id="error-message" class="hidden text-red-500 text-xs mt-1.5"></p></div>
+              <button type="submit" class="w-full py-4 bg-accent text-white font-bold rounded-button hover:bg-accent-light transition-all flex items-center justify-center shadow-lg shadow-accent/20"><i data-lucide="send" class="w-4 h-4 mr-2"></i>Submit enquiry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-ebony-light text-gray-400 border-t border-white/5 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-12">
+        <div class="md:col-span-5 space-y-4"><span class="text-xl font-extrabold tracking-tight text-white">My Shoes <span class="text-accent font-semibold">Hub</span></span><p class="text-sm max-w-sm">A family-run footwear shop in Bardoli, Gujarat, where customers can shop, rent, refurbish, and find the right fit with a warm neighborhood touch.</p></div>
+        <div class="md:col-span-3 space-y-3 text-sm"><h4 class="font-bold text-white tracking-wider uppercase text-xs">Quick links</h4><ul class="space-y-2"><li><a href="#shop" class="hover:text-white transition-colors">Shop</a></li><li><a href="#rental" class="hover:text-white transition-colors">Rental</a></li><li><a href="#sell" class="hover:text-white transition-colors">Sell your shoes</a></li><li><a href="#wiki" class="hover:text-white transition-colors">Fit Guide</a></li><li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li></ul></div>
+        <div class="md:col-span-4 space-y-3 text-sm"><h4 class="font-bold text-white tracking-wider uppercase text-xs">Visit us</h4><p class="leading-relaxed">Bardoli, Gujarat, India</p><div class="pt-2 space-y-1"><p>Phone: +91 12345 67892</p><p>Owner: Kritesh Yadav</p><p>Open daily</p></div></div>
+      </div>
+      <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500"><p>&copy; <span id="current-year"></span> My Shoes Hub. All rights reserved.</p><p class="mt-2 sm:mt-0">Interactive footwear demo • Bardoli, Gujarat</p></div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

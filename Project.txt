@@ -1,0 +1,168 @@
+# MASTER PROMPT — "My Books HUB" Production Website
+### (Give this entire document to your AI coding agent — e.g. Claude Code, Cursor, Windsurf, Devin, etc.)
+
+---
+
+## 1. ROLE & OBJECTIVE
+
+You are a senior full-stack engineer and product designer. Build a **production-grade, mobile-first website** for **My Books HUB**, a real, physical bookstore located in Bardoli, Gujarat, India, established in **1996**. This is not a toy demo — treat it as a client deliverable that will go live and be used daily by real customers and by the store owner to manage inventory, rentals, and buy-backs.
+
+Do not stop at a "pretty landing page." Deliver a working application with real data flows, real forms that submit somewhere, and a codebase that could be handed to another developer tomorrow and understood immediately.
+
+---
+
+## 2. BUSINESS CONTEXT (use this verbatim in copywriting — do not invent generic filler)
+
+| Field | Value |
+|---|---|
+| Store name | My Books HUB |
+| Owner | Magan Lal |
+| Location | Bardoli, Gujarat, India |
+| Established | 1996 (30 years in business as of 2026) |
+| Enquiry contact | +91 93282 91234 |
+| Daily recurring customers | 45+ |
+| Core categories | Fanfiction books, Manga (multiple popular anime titles), Educational books, Biography books |
+
+### Services (these are NOT afterthoughts — each needs its own dedicated page/flow, not just a homepage bullet):
+1. **Retail sales** — new and refurbished books across the four categories above.
+2. **Buy-back & refurbishment program** — customers sell their used books to the store; store refurbishes and resells at a lower price. Needs a "Sell Your Books" flow with a request form (book details, condition, photos) and a status the owner can update (Pending → Reviewed → Offer Made → Accepted/Rejected → Completed).
+3. **Book rental service** — books can be rented **per day**. Needs a rental pricing model (per-day rate per book), a due-date/return flow, and late-fee logic.
+4. **Festive discounts** — seasonal/festival-based promotional campaigns (Diwali, New Year, back-to-school, etc.) with a coupon/banner system the owner can toggle on/off.
+5. **Book Wiki** — an internal, searchable encyclopedia/wiki of books (plot summaries, author info, series order, character glossaries for manga, etc.) as a free value-added service to build community trust and SEO traffic.
+
+### Trust signals to weave into copy (do not overstate beyond these facts):
+- "Serving Bardoli since 1996"
+- "45+ happy customers walk in every day"
+- Family-run, personally overseen by owner Magan Lal
+
+---
+
+## 3. DESIGN DIRECTION
+
+Do **not** default to a generic "cream background + terracotta accent" AI-template look. Design a palette and type system that feels like a warm, well-loved, slightly nostalgic neighborhood bookstore that has survived three decades — think worn leather spines, manga ink, and paper — not a generic SaaS landing page.
+
+**Design system to establish and document in a `DESIGN.md` file before writing code:**
+- **Color palette**: 4–6 named hex values. Suggested direction (adapt, don't copy blindly): a deep maroon/oxblood primary (spine-of-an-old-book feel), a warm mustard/ochre secondary (manga cover energy), an aged-paper cream/ivory background (not stark white), charcoal-ink text (not pure black), and one accent for CTAs (e.g. a muted saffron or brick red — festive but not garish, since this is an Indian storefront and festive discounts are a real feature).
+- **Typography**: pair a characterful serif or slab-serif for headings (evokes classic book typography) with a clean humanist sans for body text, plus a monospace or condensed utility face for prices/labels/rental countdowns.
+- **Layout signature**: one memorable element — e.g. a hand-drawn-style "shelf" divider between categories, a stamped/ticket-style visual for rental due dates, or a card design that mimics a library index card for each book. Pick ONE and execute it with restraint.
+- **Motion**: subtle page-load reveal, hover states on book cards, no gratuitous animation. Respect `prefers-reduced-motion`.
+- **Mobile-first**: every layout must be designed for a 375px viewport first, then scaled up to tablet (768px) and desktop (1280px+). Test all interactive flows (cart, rental, buy-back form) on mobile breakpoints, not just visually but functionally (tap targets ≥44px, no horizontal scroll, sticky mobile cart/CTA bar).
+
+Before writing code, produce a short design plan (palette, type pairing, layout concept with ASCII wireframe, signature element) and self-critique it against "does this look like every other AI-generated bookstore site" — revise until it doesn't.
+
+---
+
+## 4. TECH STACK (production-grade, use exactly this unless you have a strong justified reason to deviate — state the reason if you do)
+
+- **Framework**: Next.js 14+ (App Router), TypeScript throughout (strict mode on)
+- **Styling**: Tailwind CSS + a small set of custom CSS variables for the design tokens above
+- **Component layer**: shadcn/ui as a base, customized to match the design system (do not ship default shadcn look)
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **Auth**: NextAuth.js (Auth.js) — email/password + optional Google login for customers; separate protected `/admin` role for the owner
+- **State management**: React Server Components + Zustand (or React Context) only for client-side cart/rental state
+- **Forms & validation**: React Hook Form + Zod
+- **Payments**: Razorpay (India-first payment gateway) for online orders/rental deposits — integrate in test mode with clear `.env.example` placeholders
+- **Image handling/storage**: Cloudinary or Vercel Blob for book cover photos and buy-back submission photos
+- **Email**: Resend or Nodemailer for order confirmations, rental due-date reminders, and buy-back status updates
+- **Deployment target**: Vercel (frontend + API routes) + a managed Postgres instance (Supabase, Neon, or Railway) — document exact deployment steps
+- **Analytics**: Vercel Analytics or Plausible (privacy-friendly)
+- **Testing**: Vitest/Jest for unit tests on business logic (rental fee calculation, buy-back offer logic), Playwright for at least the core e2e flows (browse → add to cart → checkout; submit buy-back request; rent a book)
+- **Linting/formatting**: ESLint + Prettier, pre-commit hook via Husky + lint-staged
+- **CI**: a basic GitHub Actions workflow that runs lint, typecheck, and tests on every PR
+
+---
+
+## 5. SITE ARCHITECTURE / PAGES
+
+```
+/                          Homepage — hero, category highlights, featured/refurbished picks,
+                            festive discount banner (dynamic), trust bar (45+ daily customers,
+                            since 1996), rental & buy-back service teasers, Book Wiki teaser
+/shop                      Full catalog with filters: category (Fanfiction/Manga/Educational/
+                            Biography), condition (New/Refurbished), price range, availability
+                            (Buy/Rent), search
+/shop/[category]           Category-specific listing (e.g. /shop/manga)
+/book/[slug]                Single book detail: cover, description, author, condition, price,
+                            "Buy" and "Rent per day" options, related books, link into Book Wiki
+                            entry if one exists
+/cart                      Cart (buy items + rental items shown separately with due-date picker)
+/checkout                  Checkout flow — address, payment via Razorpay, order summary
+/rent                      Dedicated "How Rental Works" page — per-day pricing explainer,
+                            deposit policy, late fee policy, FAQ
+/sell                      "Sell Your Books" — buy-back submission form (title, author, condition,
+                            photos, expected price) + status tracker for logged-in users
+/wiki                      Book Wiki home — searchable, browsable encyclopedia
+/wiki/[slug]               Individual wiki entry (synopsis, author bio, series order, glossary)
+/offers                    Festive discounts & current promotions
+/about                     Store story — 1996 founding, Magan Lal, Bardoli community roots
+/contact                   Contact form + phone (+91 93282 91234) + map embed + store hours
+/account                   Customer dashboard — order history, active rentals + due dates,
+                            buy-back request status
+/admin                     Owner-only dashboard (protected route):
+  /admin/inventory            add/edit/delete books, mark refurbished, set rental price/day
+  /admin/orders                view & update order status
+  /admin/rentals                see active rentals, mark returned, apply late fees
+  /admin/buybacks               review buy-back submissions, make offers, update status
+  /admin/offers                  create/edit/toggle festive discount campaigns
+  /admin/wiki                    add/edit Book Wiki entries
+```
+
+---
+
+## 6. CORE DATA MODEL (Prisma schema — implement fully, this is not optional)
+
+Model at minimum the following entities and their real relationships:
+
+- **User** (id, name, email, passwordHash, role [CUSTOMER/ADMIN], phone, createdAt)
+- **Book** (id, slug, title, author, category [FANFICTION/MANGA/EDUCATIONAL/BIOGRAPHY], description, coverImageUrl, condition [NEW/REFURBISHED], price, rentalPricePerDay, isRentable, isForSale, stockQuantity, wikiEntryId?, createdAt)
+- **WikiEntry** (id, slug, bookId?, title, synopsis, authorBio, seriesOrder?, glossary (Json for manga terms/characters), createdAt)
+- **Order** (id, userId, status [PENDING/PAID/FULFILLED/CANCELLED], totalAmount, razorpayOrderId, createdAt) → **OrderItem** (orderId, bookId, quantity, priceAtPurchase)
+- **Rental** (id, userId, bookId, startDate, dueDate, returnedDate?, dailyRate, depositAmount, lateFeeAccrued, status [ACTIVE/RETURNED/OVERDUE])
+- **BuybackRequest** (id, userId, bookTitle, author, conditionDescription, photoUrls (array), proposedPriceByOwner?, status [PENDING/REVIEWED/OFFER_MADE/ACCEPTED/REJECTED/COMPLETED], createdAt)
+- **Coupon/Offer** (id, title, description, discountPercent or discountAmount, validFrom, validTo, isActive, bannerImageUrl?)
+
+Write real Zod schemas mirroring these models for all form validation (client + server side — never trust client-only validation).
+
+---
+
+## 7. KEY BUSINESS LOGIC TO IMPLEMENT (not just UI — actual working logic)
+
+1. **Rental fee calculator**: `dailyRate * numberOfDays`, plus deposit, plus overdue late fee calculation once `dueDate` passes and book isn't returned. Write this as a pure, unit-tested function.
+2. **Buy-back workflow**: state machine (Pending → Reviewed → Offer Made → Accepted/Rejected → Completed) with admin-only transitions and customer-visible status tracking.
+3. **Festive discount engine**: coupons apply to cart total or specific categories, respect `validFrom`/`validTo`/`isActive`, and the homepage banner automatically shows/hides based on active offers.
+4. **Book Wiki search**: full-text search (Postgres `tsvector` or a simple ILIKE search to start) across title/author/synopsis/glossary.
+5. **Inventory sync**: when a book is sold or a rental starts, stock/availability updates in real time so two customers can't buy the last copy or rent an already-rented book.
+
+---
+
+## 8. NON-FUNCTIONAL REQUIREMENTS (production bar — do not skip)
+
+- **Mobile responsiveness**: fully functional and visually polished at 375px, 414px, 768px, 1024px, 1440px. Sticky bottom cart/CTA bar on mobile for product pages.
+- **Performance**: Lighthouse score 90+ on mobile for Performance, Accessibility, Best Practices, SEO. Use `next/image` for all book covers, lazy-load below-the-fold content.
+- **SEO**: proper metadata per page, OpenGraph tags, sitemap.xml, robots.txt, semantic HTML, and structured data (schema.org `Book` and `LocalBusiness` markup — this is a real local business in Bardoli, so `LocalBusiness` schema with address/phone/hours matters for local search).
+- **Accessibility**: WCAG AA — visible keyboard focus states, proper alt text, sufficient color contrast, ARIA labels on interactive components, reduced-motion support.
+- **Security**: hash passwords properly (bcrypt/argon2), CSRF protection on forms, rate-limit the contact/buy-back/rental forms, sanitize all user input, never expose Razorpay secret keys client-side, role-gate all `/admin` routes server-side (not just hidden UI).
+- **Error handling**: proper 404/500 pages matching the design system, form-level error states with clear plain-language messages, empty states designed with intent (e.g. empty cart, no search results, no active rentals).
+- **Environment config**: a complete `.env.example` with every required variable documented (DATABASE_URL, NEXTAUTH_SECRET, RAZORPAY_KEY_ID/SECRET, CLOUDINARY/BLOB credentials, RESEND_API_KEY, etc.)
+- **Documentation**: a `README.md` with setup instructions, a `DESIGN.md` with the design system decisions, and inline comments on non-obvious business logic (rental fees, buy-back state machine).
+
+---
+
+## 9. DELIVERY EXPECTATIONS
+
+1. Set up the project with the exact stack above, correctly configured (`package.json`, `tsconfig.json`, `tailwind.config.ts`, Prisma schema + migration).
+2. Seed the database with realistic sample data across all four categories (at least 6–8 books per category, a few with rental pricing, a couple flagged refurbished, 2–3 sample Wiki entries, 1 active festive offer) so the site is demoable immediately, not empty.
+3. Build pages in this order: Homepage → Shop/Catalog → Book Detail → Cart/Checkout → Rent page → Sell (buy-back) page → Book Wiki → About/Contact → Account dashboard → Admin dashboard.
+4. After each major section, self-review against the design brief in Section 3 — does it look distinctive, does it work on mobile, does the copy reflect the real business facts in Section 2 (not generic placeholder text).
+5. Provide a final summary of what was built, what's stubbed/mocked (e.g. if Razorpay is left in test mode), and clear next steps for the owner to go fully live (custom domain, real payment keys, real Google Business listing linkage).
+
+---
+
+## 10. TONE OF COPYWRITING
+
+Write all on-site copy as if speaking to a Bardoli local who has walked past this shop for years. Warm, plain-spoken, proud of the 1996 heritage, genuinely helpful about the rental/buy-back services rather than "salesy." Avoid corporate SaaS language ("unlock," "seamless," "elevate") — this is a neighborhood bookstore, not a startup.
+
+---
+
+**End of master prompt. Build the complete, working, production-ready codebase described above.**

@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Karan Shah",
+    "phone": "9876543210",
+    "interest": "Other enquiry",
+    "message": "Hi Kritesh bhai, looking to check out Chelsea Boots sizes at your store.",
+    "timestamp": "2026-07-06 18:05:34"
+  },
+  {
+    "name": "Test Name",
+    "phone": "1234567890",
+    "interest": "Manga",
+    "message": "Need a sample enquiry for testing",
+    "type": "contact",
+    "timestamp": "2026-07-11 13:42:16"
+  },
+  {
+    "bookTitle": "Sample Book",
+    "author": "Sample Author",
+    "condition": "Good",
+    "conditionDescription": "Well kept copy with minor shelf wear",
+    "proposedPriceByOwner": 250,
+    "type": "sell",
+    "status": "PENDING",
+    "timestamp": "2026-07-11 13:42:17"
+  },
+  {
+    "name": "Test User",
+    "phone": "9876543210",
+    "interest": "Running Shoes",
+    "message": "This is a verification enquiry for the interactive landing page.",
+    "type": "contact",
+    "timestamp": "2026-07-12 10:15:49"
+  },
+  {
+    "name": "Test User",
+    "phone": "9876543210",
+    "interest": "Chelsea Boots",
+    "message": "This is a verification enquiry for the interactive shoe landing page.",
+    "type": "contact",
+    "timestamp": "2026-07-12 10:22:19"
+  }
+]
