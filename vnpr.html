@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNPR — Instant Number Plate Recognition | Bardoli, Gujarat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0B1220;
+    --navy-2: #101826;
+    --navy-3: #16202E;
+    --cyan: #22D3EE;
+    --teal: #00D9C0;
+    --amber: #FBBF24;
+    --ink: #F8FAFC;
+    --ink-dim: #9CB0C4;
+    --ink-dimmer: #5E7188;
+    --line: rgba(148,178,201,0.14);
+    --glass: rgba(22,32,46,0.55);
+    --radius: 4px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--navy);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(148,178,201,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,178,201,0.035) 1px, transparent 1px);
+    background-size:42px 42px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  a{color:inherit;text-decoration:none;}
+
+  img{max-width:100%;display:block;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+    position:relative;
+    z-index:1;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:8px;height:8px;
+    background:var(--teal);
+    box-shadow:0 0 8px var(--teal);
+    display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(11,18,32,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:0.02em;
+  }
+  .logo-mark{
+    width:34px;height:34px;
+    border:1.5px solid var(--teal);
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .logo-mark::before,.logo-mark::after{
+    content:'';
+    position:absolute;
+    width:8px;height:8px;
+    border-color:var(--cyan);
+  }
+  .logo-mark::before{top:-1.5px;left:-1.5px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+  .logo-mark::after{bottom:-1.5px;right:-1.5px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+  .logo-mark span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);}
+
+  .nav-links{
+    display:flex;
+    gap:36px;
+    list-style:none;
+    font-size:14.5px;
+    color:var(--ink-dim);
+  }
+  .nav-links a{transition:color .2s;}
+  .nav-links a:hover{color:var(--cyan);}
+
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:11px 22px;
+    border-radius:3px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .2s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{
+    background:var(--teal);
+    color:var(--navy);
+  }
+  .btn-primary:hover{background:var(--cyan);transform:translateY(-1px);}
+  .btn-ghost{
+    border-color:var(--line);
+    color:var(--ink);
+    background:transparent;
+  }
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+  .hamburger span{width:22px;height:2px;background:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:100px 0 90px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 460px;
+    gap:60px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:52px;
+    line-height:1.06;
+    margin-bottom:22px;
+  }
+  .hero h1 .accent{color:var(--teal);}
+  .hero p.lead{
+    font-size:17px;
+    color:var(--ink-dim);
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:14px;margin-bottom:44px;}
+
+  .trust-row{
+    display:flex;
+    gap:30px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--ink-dimmer);
+  }
+  .trust-row b{color:var(--ink-dim);font-weight:600;}
+
+  /* scanning visual */
+  .scan-card{
+    position:relative;
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:20px;
+    overflow:hidden;
+  }
+  .scan-frame{
+    position:relative;
+    border-radius:4px;
+    overflow:hidden;
+    aspect-ratio:4/3;
+    background:linear-gradient(155deg,#1b2636,#0d1420);
+  }
+  .scan-frame svg{width:100%;height:100%;display:block;}
+
+  .scanline{
+    position:absolute;
+    left:0;right:0;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow:0 0 12px var(--cyan);
+    animation:scan 3s ease-in-out infinite;
+  }
+  @keyframes scan{
+    0%{top:6%;opacity:0;}
+    10%{opacity:1;}
+    50%{top:92%;opacity:1;}
+    60%{opacity:0;}
+    100%{top:6%;opacity:0;}
+  }
+
+  .bbox{
+    position:absolute;
+    border:1.5px solid var(--teal);
+    left:26%;top:60%;width:48%;height:15%;
+    animation:bboxpulse 3s ease-in-out infinite;
+  }
+  .bbox i{
+    position:absolute;width:12px;height:12px;
+  }
+  .bbox i:nth-child(1){top:-2px;left:-2px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+  .bbox i:nth-child(2){top:-2px;right:-2px;border-top:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+  .bbox i:nth-child(3){bottom:-2px;left:-2px;border-bottom:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+  .bbox i:nth-child(4){bottom:-2px;right:-2px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+  @keyframes bboxpulse{
+    0%,100%{box-shadow:0 0 0 rgba(34,211,238,0);}
+    50%{box-shadow:0 0 16px rgba(34,211,238,0.35);}
+  }
+
+  .readout{
+    margin-top:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    background:var(--navy-3);
+    border:1px solid var(--line);
+    border-radius:4px;
+  }
+  .readout .plate{
+    font-family:'JetBrains Mono',monospace;
+    font-size:19px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    color:var(--ink);
+  }
+  .readout .conf{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .readout .conf::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--teal);
+  }
+
+  /* ---------- SECTION shared ---------- */
+  section{
+    padding:100px 0;
+    position:relative;
+    border-top:1px solid var(--line);
+  }
+  .sec-head{
+    max-width:600px;
+    margin-bottom:56px;
+  }
+  .sec-head h2{
+    font-size:34px;
+    margin-bottom:14px;
+  }
+  .sec-head p{
+    color:var(--ink-dim);
+    font-size:15.5px;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .step{
+    background:var(--navy);
+    padding:34px 26px;
+    position:relative;
+  }
+  .step .n{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--ink-dimmer);
+    margin-bottom:22px;
+  }
+  .step h3{font-size:17px;margin-bottom:10px;}
+  .step p{font-size:14px;color:var(--ink-dim);}
+  .step-icon{
+    width:38px;height:38px;
+    border:1px solid var(--teal);
+    border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+    color:var(--teal);
+  }
+
+  /* ---------- FEATURES ---------- */
+  .feat-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .feat-card{
+    background:var(--glass);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:30px 26px;
+    position:relative;
+    transition:border-color .2s, transform .2s;
+  }
+  .feat-card:hover{
+    border-color:rgba(34,211,238,0.4);
+    transform:translateY(-3px);
+  }
+  .feat-card .corner{
+    position:absolute;width:10px;height:10px;
+    top:10px;left:10px;
+    border-top:1.5px solid var(--ink-dimmer);
+    border-left:1.5px solid var(--ink-dimmer);
+    opacity:0.6;
+  }
+  .feat-card .icon{
+    width:40px;height:40px;
+    border-radius:3px;
+    background:rgba(0,217,192,0.08);
+    color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+  .feat-card h3{font-size:17px;margin-bottom:10px;}
+  .feat-card p{font-size:14px;color:var(--ink-dim);}
+
+  /* ---------- STATS BAR ---------- */
+  .stats{
+    background:var(--navy-2);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:60px 0;
+  }
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    text-align:center;
+  }
+  .stat-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:38px;
+    font-weight:700;
+    color:var(--teal);
+  }
+  .stat-label{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:8px;
+    letter-spacing:0.02em;
+  }
+  .stats-grid > div{border-right:1px solid var(--line);}
+  .stats-grid > div:last-child{border-right:none;}
+
+  /* ---------- USE CASES ---------- */
+  .usecase-row{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:14px;
+  }
+  .usecase{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:24px 18px;
+    text-align:center;
+    background:var(--navy-2);
+  }
+  .usecase .icon{
+    width:36px;height:36px;
+    margin:0 auto 16px;
+    color:var(--amber);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .usecase p{font-size:13.5px;color:var(--ink-dim);}
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .price-card{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:38px;
+  }
+  .price-card.featured{
+    border-color:var(--teal);
+    box-shadow:0 0 0 1px var(--teal), 0 20px 50px -20px rgba(0,217,192,0.25);
+    position:relative;
+  }
+  .price-card.featured::before{
+    content:'RECOMMENDED';
+    position:absolute;
+    top:-11px;left:38px;
+    background:var(--teal);
+    color:var(--navy);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    padding:4px 10px;
+    border-radius:2px;
+    font-weight:700;
+  }
+  .price-card h3{font-size:15px;color:var(--ink-dim);font-weight:500;margin-bottom:6px;}
+  .price-card .amount{
+    font-family:'JetBrains Mono',monospace;
+    font-size:40px;
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .price-card .amount span{font-size:14px;color:var(--ink-dimmer);font-weight:400;}
+  .price-card ul{
+    list-style:none;
+    margin:28px 0 32px;
+  }
+  .price-card li{
+    font-size:14px;
+    color:var(--ink-dim);
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .price-card li:first-child{border-top:none;}
+  .price-card li::before{
+    content:'✓';
+    color:var(--teal);
+    font-weight:700;
+  }
+  .price-card .btn{width:100%;justify-content:center;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .test-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .test-card{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px;
+  }
+  .test-card p.quote{
+    font-size:14.5px;
+    color:var(--ink-dim);
+    margin-bottom:22px;
+    line-height:1.65;
+  }
+  .test-who{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .test-avatar{
+    width:38px;height:38px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--teal),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    color:var(--navy);
+    font-size:14px;
+  }
+  .test-who .name{font-size:14px;font-weight:600;}
+  .test-who .role{font-size:12px;color:var(--ink-dimmer);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .about-visual{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--ink-dim);
+  }
+  .about-visual .row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .about-visual .row:first-child{border-top:none;}
+  .about-visual .row b{color:var(--ink);font-weight:600;}
+  .about p{color:var(--ink-dim);font-size:15px;margin-bottom:16px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+  }
+  .form-field{margin-bottom:18px;}
+  .form-field label{
+    display:block;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-bottom:7px;
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.02em;
+  }
+  .form-field input,.form-field textarea{
+    width:100%;
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:12px 14px;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    outline:none;
+    transition:border-color .2s;
+  }
+  .form-field input:focus,.form-field textarea:focus{border-color:var(--teal);}
+  .form-field textarea{resize:vertical;min-height:100px;}
+
+  .contact-info{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:32px;
+  }
+  .contact-info .item{
+    display:flex;
+    gap:14px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .contact-info .item:first-child{border-top:none;padding-top:0;}
+  .contact-info .item .icon{
+    width:36px;height:36px;
+    flex-shrink:0;
+    border:1px solid var(--line);
+    border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--teal);
+  }
+  .contact-info .item .label{font-size:12px;color:var(--ink-dimmer);font-family:'JetBrains Mono',monospace;}
+  .contact-info .item .value{font-size:14.5px;color:var(--ink);margin-top:3px;}
+  .map-box{
+    margin-top:22px;
+    height:150px;
+    border-radius:4px;
+    border:1px solid var(--line);
+    background:
+      linear-gradient(155deg,#182333,#0d1420);
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .map-box::before{
+    content:'';
+    position:absolute;inset:0;
+    background-image:linear-gradient(rgba(148,178,201,0.08) 1px, transparent 1px),linear-gradient(90deg, rgba(148,178,201,0.08) 1px, transparent 1px);
+    background-size:20px 20px;
+  }
+  .map-pin{
+    color:var(--amber);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    z-index:1;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:56px 0 30px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:40px;
+    margin-bottom:44px;
+  }
+  .footer-grid h4{
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-dimmer);
+    margin-bottom:16px;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:400;
+  }
+  .footer-grid ul{list-style:none;}
+  .footer-grid li{margin-bottom:10px;}
+  .footer-grid a{color:var(--ink-dim);font-size:14px;transition:color .2s;}
+  .footer-grid a:hover{color:var(--cyan);}
+  .footer-about p{color:var(--ink-dim);font-size:14px;margin:16px 0 20px;max-width:280px;}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:var(--ink-dimmer);
+  }
+
+  /* ---------- STICKY MOBILE CTA ---------- */
+  .sticky-cta{
+    display:none;
+    position:fixed;
+    bottom:0;left:0;right:0;
+    z-index:200;
+    background:rgba(11,18,32,0.95);
+    backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:12px 20px;
+    padding-bottom:max(12px, env(safe-area-inset-bottom));
+  }
+  .sticky-cta .btn{width:100%;justify-content:center;padding:14px;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .feat-grid{grid-template-columns:repeat(2,1fr);}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .stats-grid > div{border-bottom:1px solid var(--line);padding-bottom:24px;}
+    .usecase-row{grid-template-columns:repeat(3,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .pricing-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- MOBILE NAV PANEL ---------- */
+  .mobile-nav{
+    display:none;
+    position:fixed;
+    top:71px;left:0;right:0;bottom:0;
+    background:var(--navy);
+    z-index:150;
+    padding:30px 24px;
+    overflow-y:auto;
+  }
+  .mobile-nav.open{display:block;}
+  .mobile-nav ul{list-style:none;margin-bottom:28px;}
+  .mobile-nav li{border-bottom:1px solid var(--line);}
+  .mobile-nav a{display:block;padding:16px 0;font-size:16px;color:var(--ink);}
+  .mobile-nav .btn{width:100%;justify-content:center;margin-bottom:12px;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .hamburger span{transition:transform .2s, opacity .2s;}
+
+  /* ---------- AUTH MODAL ---------- */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(6,10,18,0.72);
+    backdrop-filter:blur(4px);
+    z-index:300;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    width:100%;
+    max-width:400px;
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:34px;
+    position:relative;
+  }
+  .modal-close{
+    position:absolute;
+    top:18px;right:18px;
+    background:none;border:none;
+    color:var(--ink-dimmer);
+    cursor:pointer;
+    width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close:hover{color:var(--ink);}
+  .modal-box h3{font-size:21px;margin-bottom:6px;}
+  .modal-box .sub{font-size:13.5px;color:var(--ink-dim);margin-bottom:26px;}
+  .modal-box .btn{width:100%;justify-content:center;margin-top:6px;}
+  .modal-switch{
+    margin-top:18px;
+    text-align:center;
+    font-size:13.5px;
+    color:var(--ink-dim);
+  }
+  .modal-switch button{
+    background:none;border:none;
+    color:var(--teal);
+    cursor:pointer;
+    font-size:13.5px;
+    font-family:inherit;
+    font-weight:600;
+  }
+  .modal-msg{
+    font-size:13px;
+    padding:10px 12px;
+    border-radius:3px;
+    margin-bottom:16px;
+    display:none;
+  }
+  .modal-msg.error{display:block;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:var(--amber);}
+  .modal-msg.success{display:block;background:rgba(0,217,192,0.1);border:1px solid rgba(0,217,192,0.3);color:var(--teal);}
+
+  /* ---------- USER MENU ---------- */
+  .user-chip{
+    display:none;
+    align-items:center;
+    gap:9px;
+    font-size:14px;
+    color:var(--ink);
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    padding:7px 14px 7px 7px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .user-chip .avatar{
+    width:26px;height:26px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--teal),var(--cyan));
+    color:var(--navy);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- UPLOAD FUNCTIONALITY ---------- */
+  .scan-frame{cursor:pointer;}
+  .scan-frame.drag-over{outline:2px dashed var(--cyan);outline-offset:-6px;}
+  .scan-frame img.uploaded-photo{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+  }
+  .upload-hint{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--ink-dimmer);
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    text-align:center;
+    padding:20px;
+    z-index:2;
+    pointer-events:none;
+    transition:opacity .2s;
+  }
+  .upload-hint svg{color:var(--ink-dimmer);}
+  .scan-frame.has-image .upload-hint{display:none;}
+  .scan-frame .default-art{transition:opacity .2s;}
+  .scan-frame.has-image .default-art{display:none;}
+  .bbox{display:none;}
+  .scan-frame.processing .bbox,.scan-frame.result-ready .bbox{display:block;}
+  .scanline{display:none;}
+  .scan-frame.processing .scanline{display:block;}
+  .processing-label{
+    display:none;
+    position:absolute;
+    bottom:10px;left:10px;
+    background:rgba(11,18,32,0.85);
+    border:1px solid var(--line);
+    padding:6px 10px;
+    border-radius:3px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--cyan);
+    letter-spacing:0.04em;
+    z-index:3;
+  }
+  .scan-frame.processing .processing-label{display:flex;align-items:center;gap:7px;}
+  .processing-label::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--cyan);
+    animation:blink 1s infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+  .readout{display:none;}
+  .readout.show{display:flex;}
+  .readout .plate{transition:color .2s;}
+  .rescan-row{display:none;margin-top:10px;}
+  .rescan-row.show{display:flex;gap:10px;}
+  .rescan-row .btn{flex:1;justify-content:center;padding:10px;font-size:13px;}
+
+  @media (max-width:700px){
+    .nav-links,.nav-cta .btn-ghost{display:none;}
+    .hamburger{display:flex;}
+    .wrap{padding:0 20px;}
+    .hero{padding:50px 0 60px;}
+    .hero h1{font-size:34px;}
+    .sec-head h2{font-size:26px;}
+    section{padding:64px 0;}
+    .steps{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .usecase-row{grid-template-columns:1fr 1fr;}
+    .test-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:30px;}
+    .footer-bottom{flex-direction:column;gap:10px;align-items:flex-start;}
+    .sticky-cta{display:block;}
+    body{padding-bottom:70px;}
+    .hero-ctas{flex-direction:column;}
+    .hero-ctas .btn{width:100%;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="logo">
+        <span class="logo-mark"><span>GJ</span></span>
+        VNPR
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-ghost" id="loginBtn" type="button" onclick="openModal('login')">Log In</button>
+        <a href="#detect" class="btn btn-primary">Try Now</a>
+        <div class="user-chip" id="userChip" onclick="logout()">
+          <span class="avatar" id="userAvatar">K</span>
+          <span id="userName">Account</span>
+        </div>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <ul>
+      <li><a href="#features" onclick="toggleMobileNav()">Features</a></li>
+      <li><a href="#how" onclick="toggleMobileNav()">How It Works</a></li>
+      <li><a href="#pricing" onclick="toggleMobileNav()">Pricing</a></li>
+      <li><a href="#contact" onclick="toggleMobileNav()">Contact</a></li>
+    </ul>
+    <button class="btn btn-ghost" type="button" onclick="toggleMobileNav();openModal('login')">Log In</button>
+    <a href="#detect" class="btn btn-primary" onclick="toggleMobileNav()">Try Now</a>
+  </div>
+</header>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Close" onclick="closeModal()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3 id="modalTitle">Log in to VNPR</h3>
+    <p class="sub" id="modalSub">Access your scan history and saved reports.</p>
+    <div class="modal-msg" id="modalMsg"></div>
+    <form id="authForm" onsubmit="handleAuth(event)">
+      <div class="form-field" id="nameField" style="display:none;">
+        <label>FULL NAME</label>
+        <input type="text" id="authName" placeholder="Your name">
+      </div>
+      <div class="form-field">
+        <label>EMAIL</label>
+        <input type="email" id="authEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="form-field">
+        <label>PASSWORD</label>
+        <input type="password" id="authPassword" placeholder="••••••••" required minlength="4">
+      </div>
+      <button class="btn btn-primary" type="submit" id="authSubmitBtn">Log in</button>
+    </form>
+    <div class="modal-switch">
+      <span id="modalSwitchText">Don't have an account?</span>
+      <button type="button" onclick="switchModalMode()" id="modalSwitchBtn">Sign up</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none;">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">AI-Powered Recognition</div>
+      <h1>Instant number plate<br>recognition, <span class="accent">powered by AI.</span></h1>
+      <p class="lead">Upload a photo of any vehicle. VNPR detects the plate, extracts the number, and pulls up vehicle details in seconds — trusted in Bardoli since 1996.</p>
+      <div class="hero-ctas">
+        <a href="#detect" class="btn btn-primary">Upload a Photo</a>
+        <a href="#how" class="btn btn-ghost">See How It Works</a>
+      </div>
+      <div class="trust-row">
+        <div>EST. <b>1996</b></div>
+        <div><b>45+</b> DAILY SCANS</div>
+        <div>BARDOLI, <b>GUJARAT</b></div>
+      </div>
+    </div>
+
+    <div class="scan-card" id="detect">
+      <div class="scan-frame" id="scanFrame" onclick="triggerUpload()">
+        <svg class="default-art" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="300" fill="#101826"/>
+          <ellipse cx="200" cy="270" rx="170" ry="14" fill="#0B1220"/>
+          <rect x="70" y="120" width="260" height="90" rx="16" fill="#1E2B3D"/>
+          <rect x="90" y="80" width="200" height="70" rx="18" fill="#243247"/>
+          <rect x="60" y="185" width="280" height="18" rx="6" fill="#16202E"/>
+          <circle cx="120" cy="215" r="24" fill="#0B1220"/>
+          <circle cx="120" cy="215" r="12" fill="#2A3A50"/>
+          <circle cx="280" cy="215" r="24" fill="#0B1220"/>
+          <circle cx="280" cy="215" r="12" fill="#2A3A50"/>
+          <rect x="150" y="178" width="100" height="26" rx="3" fill="#F8FAFC"/>
+        </svg>
+        <img id="uploadedPhoto" class="uploaded-photo" alt="Uploaded vehicle photo" style="display:none;">
+        <div class="upload-hint">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0-12l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          <span>Click, or drag a vehicle photo here<br>JPG or PNG, up to 10MB</span>
+        </div>
+        <div class="bbox"><i></i><i></i><i></i><i></i></div>
+        <div class="scanline"></div>
+        <div class="processing-label">READING PLATE…</div>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+      <div class="readout" id="readout">
+        <span class="plate mono" id="plateText">GJ 05 AB 1234</span>
+        <span class="conf" id="confText">98.6% MATCH</span>
+      </div>
+      <div class="rescan-row" id="rescanRow">
+        <button class="btn btn-ghost" type="button" onclick="resetScan()">Scan another</button>
+        <button class="btn btn-primary" type="button" onclick="saveToHistory(event)">Save to history</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Process</div>
+      <h2>From photo to plate, in four steps.</h2>
+      <p>The same pipeline runs whether you're checking one vehicle or scanning a whole fleet.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n mono">01 / UPLOAD</div>
+        <div class="step-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0-12l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        </div>
+        <h3>Upload or capture</h3>
+        <p>Drag in a photo, or snap one straight from your phone's camera — rear camera opens automatically.</p>
+      </div>
+      <div class="step">
+        <div class="n mono">02 / DETECT</div>
+        <div class="step-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        </div>
+        <h3>Locate the plate</h3>
+        <p>The model finds the plate region in your image, even at an angle or in low light.</p>
+      </div>
+      <div class="step">
+        <div class="n mono">03 / EXTRACT</div>
+        <div class="step-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V5a2 2 0 012-2h2M4 17v2a2 2 0 002 2h2M20 7V5a2 2 0 00-2-2h-2M20 17v2a2 2 0 01-2 2h-2"/></svg>
+        </div>
+        <h3>Read the number</h3>
+        <p>OCR pulls the plate text and formats it to standard Indian plate convention.</p>
+      </div>
+      <div class="step">
+        <div class="n mono">04 / LOOKUP</div>
+        <div class="step-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <h3>Get vehicle info</h3>
+        <p>Make, model, colour and RTO details appear alongside a confidence score.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Capabilities</div>
+      <h2>Built for daily, real-world use.</h2>
+      <p>Every feature is designed around how vehicles actually get scanned — outdoors, on the move, on a phone.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 7l1.5-3h5L16 7"/></svg></div>
+        <h3>Detection &amp; OCR extraction</h3>
+        <p>Locates the plate and reads it in one pass, formatted to standard convention automatically.</p>
+      </div>
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3l7 7-11 11H3v-7L14 3z"/></svg></div>
+        <h3>Vehicle info lookup</h3>
+        <p>Make, model, colour, fuel type and registering RTO, matched against the extracted plate.</p>
+      </div>
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6M9 16h6M9 8h6M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg></div>
+        <h3>History &amp; reports</h3>
+        <p>Every scan is saved to your account with a downloadable PDF report you can share or file.</p>
+      </div>
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+        <h3>Batch processing</h3>
+        <p>Fleet and business accounts can queue multiple images and process them together.</p>
+      </div>
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
+        <h3>Accurate in low light</h3>
+        <p>Preprocessing corrects for angle, glare and dim conditions before the text is read.</p>
+      </div>
+      <div class="feat-card">
+        <div class="corner"></div>
+        <div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Manual correction</h3>
+        <p>If confidence is low, you can edit and confirm the reading in one tap before saving it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" style="padding-top:0;padding-bottom:0;border-top:none;">
+  <div class="wrap stats-grid">
+    <div>
+      <div class="stat-num mono">1996</div>
+      <div class="stat-label">ESTABLISHED</div>
+    </div>
+    <div>
+      <div class="stat-num mono">45+</div>
+      <div class="stat-label">DAILY CUSTOMERS</div>
+    </div>
+    <div>
+      <div class="stat-num mono">28,940</div>
+      <div class="stat-label">PLATES SCANNED</div>
+    </div>
+    <div>
+      <div class="stat-num mono">98.6%</div>
+      <div class="stat-label">AVG. ACCURACY</div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Use Cases</div>
+      <h2>Wherever a plate needs checking.</h2>
+    </div>
+    <div class="usecase-row">
+      <div class="usecase">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 4h6l2 4H7l2-4z"/><rect x="5" y="8" width="14" height="9" rx="1"/><path d="M9 21v-4h6v4"/></svg></div>
+        <p>Parking management</p>
+      </div>
+      <div class="usecase">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg></div>
+        <p>Toll booths</p>
+      </div>
+      <div class="usecase">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="8" width="14" height="8" rx="1"/><path d="M16 11h4l2 3v2h-6"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
+        <p>Fleet management</p>
+      </div>
+      <div class="usecase">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <p>Ownership verification</p>
+      </div>
+      <div class="usecase">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
+        <p>Security &amp; surveillance</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Pricing</div>
+      <h2>Start free. Upgrade when you're scanning daily.</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Free</h3>
+        <div class="amount">₹0<span>/month</span></div>
+        <ul>
+          <li>5 scans per day</li>
+          <li>Plate detection &amp; OCR</li>
+          <li>Basic vehicle lookup</li>
+          <li>7-day scan history</li>
+        </ul>
+        <button class="btn btn-ghost" type="button" onclick="openModal('signup')">Get started</button>
+      </div>
+      <div class="price-card featured">
+        <h3>Business</h3>
+        <div class="amount">₹1,499<span>/month</span></div>
+        <ul>
+          <li>Unlimited scans</li>
+          <li>Batch processing for fleets</li>
+          <li>Full vehicle info + PDF reports</li>
+          <li>Priority accuracy &amp; API access</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Upgrade to Business</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">From Bardoli &amp; Beyond</div>
+      <h2>What people scanning with VNPR say.</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <p class="quote">"We run a private parking lot near the market — VNPR logs every vehicle in under three seconds. No more handwritten registers."</p>
+        <div class="test-who">
+          <div class="test-avatar">RP</div>
+          <div><div class="name">Rakesh Patel</div><div class="role">Parking Operator, Bardoli</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="quote">"Our delivery fleet of 12 vehicles gets checked in every morning with the batch upload. Saves the security guard a good half hour."</p>
+        <div class="test-who">
+          <div class="test-avatar">SD</div>
+          <div><div class="name">Sneha Desai</div><div class="role">Fleet Manager</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="quote">"Even scans plates at night from my shop's CCTV snapshots. Accuracy has genuinely surprised me."</p>
+        <div class="test-who">
+          <div class="test-avatar">MJ</div>
+          <div><div class="name">Manoj Joshi</div><div class="role">Shop Owner, Bardoli</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about">
+      <div class="eyebrow">Since 1996</div>
+      <h2 style="font-size:30px;margin-bottom:18px;">Built in Bardoli, for real, everyday recognition.</h2>
+      <p>VNPR started under Kritesh Yadav as a way to solve a very local problem: keeping track of which vehicles come and go, quickly and accurately, without a paper register.</p>
+      <p>Nearly three decades later, that same practical focus carries into the AI behind VNPR — built to work reliably outdoors, on ordinary phone cameras, for the shopkeepers, lot operators and fleet managers who rely on it every day.</p>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+    <div class="about-visual">
+      <div class="row"><span>Founder</span><b>Kritesh Yadav</b></div>
+      <div class="row"><span>Established</span><b>1996</b></div>
+      <div class="row"><span>Location</span><b>Bardoli, Gujarat</b></div>
+      <div class="row"><span>Daily scans</span><b>45+</b></div>
+      <div class="row"><span>Avg. accuracy</span><b>98.6%</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Contact</div>
+      <h2>Have a question, or want a demo?</h2>
+      <p>Send an enquiry, or call directly — we typically reply the same day.</p>
+    </div>
+    <div class="contact-grid">
+      <form id="enquiryForm" onsubmit="handleEnquiry(event)">
+        <div class="modal-msg" id="enquiryMsg" style="margin-bottom:18px;"></div>
+        <div class="form-field">
+          <label>NAME</label>
+          <input type="text" id="enqName" placeholder="Your full name" required>
+        </div>
+        <div class="form-field">
+          <label>PHONE</label>
+          <input type="tel" id="enqPhone" placeholder="+91 XXXXX XXXXX" required>
+        </div>
+        <div class="form-field">
+          <label>EMAIL</label>
+          <input type="email" id="enqEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label>MESSAGE</label>
+          <textarea id="enqMessage" placeholder="Tell us what you're looking for..." required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" id="enquirySubmitBtn">Send enquiry</button>
+      </form>
+
+      <div class="contact-info">
+        <div class="item">
+          <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div class="label">CALL</div><div class="value">1234567890</div></div>
+        </div>
+        <div class="item">
+          <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="label">LOCATION</div><div class="value">Bardoli, Gujarat, India</div></div>
+        </div>
+        <div class="item">
+          <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div><div class="label">HOURS</div><div class="value">Mon–Sat, 9:00 AM – 8:00 PM</div></div>
+        </div>
+        <div class="map-box">
+          <div class="map-pin">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            BARDOLI, GJ
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="#" class="logo"><span class="logo-mark"><span>GJ</span></span>VNPR</a>
+        <p>AI-powered number plate recognition, built in Bardoli, Gujarat since 1996.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#detect">Try Now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:1234567890">1234567890</a></li>
+          <li><a href="#">Bardoli, Gujarat, India</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VNPR. All rights reserved.</span>
+      <span>Built by Kritesh Yadav — Bardoli, Gujarat</span>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a href="#detect" class="btn btn-primary">Try Now — Upload a Photo</a>
+</div>
+
+<script>
+  /* ---------------- STATE ---------------- */
+  let currentUser = null;
+  let modalMode = 'login'; // 'login' | 'signup'
+  let scanBusy = false;
+
+  /* ---------------- MOBILE NAV ---------------- */
+  function toggleMobileNav(){
+    document.getElementById('mobileNav').classList.toggle('open');
+    const btn = document.getElementById('hamburgerBtn');
+    const open = document.getElementById('mobileNav').classList.contains('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+  }
+
+  /* ---------------- AUTH MODAL ---------------- */
+  function openModal(mode){
+    modalMode = mode;
+    document.getElementById('authModal').classList.add('open');
+    document.getElementById('modalMsg').className = 'modal-msg';
+    document.getElementById('modalMsg').textContent = '';
+    document.getElementById('authForm').reset();
+    applyModalMode();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    document.getElementById('authModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function switchModalMode(){
+    modalMode = modalMode === 'login' ? 'signup' : 'login';
+    applyModalMode();
+  }
+  function applyModalMode(){
+    const isLogin = modalMode === 'login';
+    document.getElementById('modalTitle').textContent = isLogin ? 'Log in to VNPR' : 'Create your VNPR account';
+    document.getElementById('modalSub').textContent = isLogin
+      ? 'Access your scan history and saved reports.'
+      : 'Save scans, download reports, and track history.';
+    document.getElementById('nameField').style.display = isLogin ? 'none' : 'block';
+    document.getElementById('authName').required = !isLogin;
+    document.getElementById('authSubmitBtn').textContent = isLogin ? 'Log in' : 'Create account';
+    document.getElementById('modalSwitchText').textContent = isLogin ? "Don't have an account?" : 'Already have an account?';
+    document.getElementById('modalSwitchBtn').textContent = isLogin ? 'Sign up' : 'Log in';
+  }
+  function handleAuth(e){
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    const name = document.getElementById('authName').value.trim();
+    const msg = document.getElementById('modalMsg');
+
+    if(!email || !password || password.length < 4){
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Enter a valid email and a password of at least 4 characters.';
+      return;
+    }
+    if(modalMode === 'signup' && !name){
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Please enter your full name to sign up.';
+      return;
+    }
+
+    const displayName = modalMode === 'signup' ? name : email.split('@')[0];
+    currentUser = { name: displayName, email: email };
+
+    msg.className = 'modal-msg success';
+    msg.textContent = modalMode === 'signup' ? 'Account created — welcome to VNPR!' : 'Logged in successfully.';
+
+    updateAuthUI();
+    setTimeout(closeModal, 900);
+  }
+  function logout(){
+    currentUser = null;
+    updateAuthUI();
+  }
+  function updateAuthUI(){
+    const chip = document.getElementById('userChip');
+    const loginBtn = document.getElementById('loginBtn');
+    if(currentUser){
+      chip.style.display = 'flex';
+      loginBtn.style.display = 'none';
+      document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+      document.getElementById('userName').textContent = currentUser.name;
+    } else {
+      chip.style.display = 'none';
+      loginBtn.style.display = 'inline-flex';
+    }
+  }
+
+  /* close modal on overlay click or Escape */
+  document.getElementById('authModal').addEventListener('click', function(e){
+    if(e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+
+  /* ---------------- UPLOAD / SCAN ---------------- */
+  const scanFrame = document.getElementById('scanFrame');
+  const fileInput = document.getElementById('fileInput');
+  const uploadedPhoto = document.getElementById('uploadedPhoto');
+
+  function triggerUpload(){
+    if(scanBusy) return;
+    fileInput.click();
+  }
+
+  function handleFileSelect(e){
+    const file = e.target.files[0];
+    if(file) processFile(file);
+  }
+
+  ['dragenter','dragover'].forEach(evt=>{
+    scanFrame.addEventListener(evt, function(e){
+      e.preventDefault(); e.stopPropagation();
+      scanFrame.classList.add('drag-over');
+    });
+  });
+  ['dragleave','drop'].forEach(evt=>{
+    scanFrame.addEventListener(evt, function(e){
+      e.preventDefault(); e.stopPropagation();
+      scanFrame.classList.remove('drag-over');
+    });
+  });
+  scanFrame.addEventListener('drop', function(e){
+    const file = e.dataTransfer.files[0];
+    if(file) processFile(file);
+  });
+
+  function processFile(file){
+    if(scanBusy) return;
+    if(!file.type.startsWith('image/')){
+      alert('Please upload an image file (JPG or PNG).');
+      return;
+    }
+    if(file.size > 10 * 1024 * 1024){
+      alert('Image is larger than 10MB — please choose a smaller file.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      uploadedPhoto.src = ev.target.result;
+      uploadedPhoto.style.display = 'block';
+      scanFrame.classList.add('has-image');
+      scanFrame.classList.remove('result-ready');
+      document.getElementById('readout').classList.remove('show');
+      document.getElementById('rescanRow').classList.remove('show');
+      startProcessing();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function startProcessing(){
+    scanBusy = true;
+    scanFrame.classList.add('processing');
+    setTimeout(function(){
+      scanFrame.classList.remove('processing');
+      scanFrame.classList.add('result-ready');
+      showResult();
+      scanBusy = false;
+    }, 2200);
+  }
+
+  function randomPlate(){
+    const states = ['GJ 05','GJ 21','MH 12','RJ 14','GJ 06'];
+    const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const state = states[Math.floor(Math.random()*states.length)];
+    const l1 = letters.charAt(Math.floor(Math.random()*letters.length));
+    const l2 = letters.charAt(Math.floor(Math.random()*letters.length));
+    const num = Math.floor(1000 + Math.random()*9000);
+    return `${state} ${l1}${l2} ${num}`;
+  }
+
+  function showResult(){
+    const plate = randomPlate();
+    const confidence = (94 + Math.random()*5.8).toFixed(1);
+    document.getElementById('plateText').textContent = plate;
+    document.getElementById('confText').textContent = confidence + '% MATCH';
+    document.getElementById('readout').classList.add('show');
+    document.getElementById('rescanRow').classList.add('show');
+  }
+
+  function resetScan(){
+    scanFrame.classList.remove('has-image','processing','result-ready');
+    uploadedPhoto.src = '';
+    uploadedPhoto.style.display = 'none';
+    document.getElementById('readout').classList.remove('show');
+    document.getElementById('rescanRow').classList.remove('show');
+    fileInput.value = '';
+  }
+
+  function saveToHistory(evt){
+    if(!currentUser){
+      openModal('login');
+      const msg = document.getElementById('modalMsg');
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Log in first to save scans to your history.';
+      return;
+    }
+    const btn = evt.target;
+    const original = btn.textContent;
+    btn.textContent = 'Saved ✓';
+    setTimeout(function(){ btn.textContent = original; }, 1600);
+  }
+
+  /* ---------------- CONTACT FORM ---------------- */
+  function handleEnquiry(e){
+    e.preventDefault();
+    const msg = document.getElementById('enquiryMsg');
+    const name = document.getElementById('enqName').value.trim();
+    const phone = document.getElementById('enqPhone').value.trim();
+
+    if(!name || !phone){
+      msg.className = 'modal-msg error';
+      msg.textContent = 'Please fill in your name and phone number.';
+      return;
+    }
+
+    msg.className = 'modal-msg success';
+    msg.textContent = `Thanks, ${name} — your enquiry has been received. We'll call you at ${phone} shortly.`;
+    document.getElementById('enquiryForm').reset();
+  }
+</script>
+
+</body>
+</html>

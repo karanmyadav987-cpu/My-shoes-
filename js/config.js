@@ -11,6 +11,13 @@ const CONFIG = {
     email: "hello@myshoeshub.in",
     openingHours: "Monday - Sunday: 10:00 AM - 9:00 PM"
   },
+  supabase: {
+    url: "", // USER_TODO: Insert Supabase project URL here
+    anonKey: "" // USER_TODO: Insert Supabase Anon Key here
+  },
+  security: {
+    encryptionKey: "" // USER_TODO: Insert a secure 32-character key for client-side AES encryption
+  },
   books: [
     {
       id: "chelsea-boots-new",
