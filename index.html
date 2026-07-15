@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -80,6 +80,7 @@
         <div class="hidden sm:flex items-center space-x-4">
           <a id="nav-whatsapp-btn" href="#" target="_blank" class="p-2.5 bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition-colors" aria-label="Chat on WhatsApp"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
           <a id="nav-call-btn" href="tel:+919328291234" class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-semibold rounded-button text-white bg-primary hover:bg-primary-light transition-all shadow-sm hover:shadow"><i data-lucide="phone" class="w-4 h-4 mr-2"></i>Call: +91 93282 91234</a>
+          <div id="auth-container" class="flex items-center space-x-3"></div>
         </div>
         <div class="md:hidden flex items-center space-x-3">
           <a id="mobile-quick-call" href="tel:+919328291234" class="p-2 bg-primary text-white rounded-button sm:hidden" aria-label="Call Now"><i data-lucide="phone" class="w-5 h-5"></i></a>
@@ -96,6 +97,7 @@
         <a href="#wiki" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Wiki</a>
         <a href="#contact" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-semibold text-gray-700 hover:bg-cream-dark hover:text-primary transition-colors">Contact</a>
         <div class="pt-4 flex flex-col space-y-3 border-t border-warm-dark/10">
+          <div id="mobile-auth-container" class="w-full"></div>
           <a id="mobile-whatsapp-btn" href="#" target="_blank" class="flex items-center justify-center w-full px-4 py-3 bg-green-600 text-white rounded-button font-bold text-sm hover:bg-green-700 transition-colors"><i data-lucide="message-circle" class="w-4 h-4 mr-2"></i>WhatsApp Us</a>
           <a href="tel:+919328291234" class="flex items-center justify-center w-full px-4 py-3 bg-primary text-white rounded-button font-bold text-sm hover:bg-primary-light transition-colors"><i data-lucide="phone" class="w-4 h-4 mr-2"></i>Call: +91 93282 91234</a>
         </div>
@@ -337,7 +339,13 @@
 
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
 
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- CryptoJS CDN for symmetric AES and hash computations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
   <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

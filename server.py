@@ -136,7 +136,7 @@ class MyShoesHubHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     server_address = ('', PORT)
-    httpd = HTTPServer(server_address, MyBooksHubHandler)
+    httpd = HTTPServer(server_address, MyShoesHubHandler)
     print('\n=======================================================')
     print('  My Books HUB Local Development Server Active')
     print(f'  Url: http://localhost:{PORT}')
